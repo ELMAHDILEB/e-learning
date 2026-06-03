@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navLinks {
+  @apply absolute top-20 left-0 z-[1000] w-full py-10 
+  bg-[var(--bg)]
+  flex flex-col items-center gap-6
+  md:static md:flex md:flex-row md:w-auto md:py-0 md:bg-transparent md:z-auto
+  transition-all duration-500 ease-in-out;
+
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+
+.navLinks.open {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+@media (min-width: 768px) {
+  .navLinks {
+    clip-path: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .navLinks {
+    clip-path: none !important;
+  }
+}
+
+.toggle {
+  @apply text-[1em] overflow-hidden transition-all duration-[1000ms] ease-in-out max-h-0;
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+
+.toggle.open {
+  @apply max-h-[500px] pt-[12px] text-center font-normal;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #0f172a;
+  --border: #e2e8f0;
+  --primary: #0891b2;
+}
+
+.dark {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --text: #f8fafc;
+  --border: #334155;
+  --primary: #22d3ee;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  font-family: "Inter", sans-serif;
+}
