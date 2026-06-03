@@ -15,7 +15,7 @@ import Profile from "../pages/admin/Profile.jsx";
 import Users from "../pages/admin/Users.jsx";
 import Course from "../pages/admin/Courses.jsx";
 import EditCourse from "../pages/admin/EditCourse.jsx";
-
+import PageNotFound from "../pages/PageNotFound.jsx";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +45,8 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+      { path: "*", 
+        element: <PageNotFound /> },
     ],
   },
 
