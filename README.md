@@ -1,16 +1,66 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+src/
+├─ assets/
+├─ components/
+│  ├─ Admin/
+│  │  ├─ dashboard/
+│  │  │  ├─ CategoryChart.jsx
+│  │  │  ├─ EnrollmentChart.jsx
+│  │  │  ├─ StatsCards.jsx
+│  │  │  └─ WeeklyUsersChart.jsx
+│  │  └─ users/
+│  │     ├─ DeleteConfirm.jsx
+│  │     ├─ UserForm.jsx
+│  │     ├─ UserModal.jsx
+│  │     ├─ UserSearchBar.jsx
+│  │     └─ UserTable.jsx
+│  ├─ Auth/
+│  │  └─ AuthForm.jsx
+│  ├─ Layout/
+│  │  └─ Header.jsx
+│  ├─ Student/
+│  └─ UI/
+│     ├─ Button.jsx
+│     ├─ Input.jsx
+│     └─ ThemeToggle.jsx
+├─ context/
+│  ├─ ThemeContext.jsx
+│  └─ ThemeProvider.jsx
+├─ hooks/
+│  ├─ useAuthForm.js
+│  └─ useTheme.js
+├─ layouts/
+│  ├─ AdminLayout.jsx
+│  ├─ MainLayout.jsx
+│  └─ StudentLayout.jsx
+├─ pages/
+│  ├─ admin/
+│  │  ├─ Courses.jsx
+│  │  ├─ CreateCourse.jsx
+│  │  ├─ Dashboard.jsx
+│  │  ├─ EditCourse.jsx
+│  │  ├─ Profile.jsx
+│  │  └─ Users.jsx
+│  ├─ student/
+│  │  ├─ Course.jsx
+│  │  ├─ CourseDetails.jsx
+│  │  ├─ Dashboard.jsx
+│  │  ├─ Profile.jsx
+│  │  └─ Settings.jsx
+│  ├─ About.jsx
+│  ├─ Contact.jsx
+│  ├─ ForgotPassword.jsx
+│  ├─ Home.jsx
+│  ├─ Login.jsx
+│  ├─ PageNotFound.jsx
+│  └─ Register.jsx
+├─ routes/
+│  └─ index.jsx
+├─ services/
+│  ├─ api.js
+│  ├─ authService.js
+│  └─ userService.js
+├─ utils/
+│  └─ validators.js
+├─ App.jsx
+├─ index.css
+└─ main.jsx
