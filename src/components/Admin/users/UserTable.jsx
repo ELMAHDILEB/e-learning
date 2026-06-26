@@ -1,4 +1,4 @@
-import { Mail, Pencil, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Mail, Pencil, Trash2 } from "lucide-react";
 
 const roleBadge = {
   Admin: "bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400",
@@ -85,31 +85,21 @@ const UserTable = ({ users, total, page, totalPages, onEdit, onDelete, onNext, o
     </div>
 
     {/* Pagination */}
-    <div className="flex items-center justify-between px-4 py-3 border-t border-[var(--border)] flex-wrap gap-3">
-      <p className="text-xs text-[var(--text)] opacity-50">
-        Total <span className="font-medium text-[var(--text)] opacity-100">{total}</span> users
-      </p>
-      <div className="flex items-center gap-2">
-        <button
-          onClick={onPrev}
-          disabled={page === 1}
-          className="p-1.5 rounded-lg border border-[var(--border)] text-[var(--text)] disabled:opacity-30 hover:bg-[var(--bg)] transition-colors disabled:cursor-not-allowed"
-        >
-          <ChevronLeft size={15} />
-        </button>
-        <span className="text-sm font-medium px-1">
-          <span className="text-cyan-500">{page}</span>
-          <span className="text-[var(--text)] opacity-40"> / {totalPages}</span>
-        </span>
-        <button
-          onClick={onNext}
-          disabled={page === totalPages}
-          className="p-1.5 rounded-lg border border-[var(--border)] text-[var(--text)] disabled:opacity-30 hover:bg-[var(--bg)] transition-colors disabled:cursor-not-allowed"
-        >
-          <ChevronRight size={15} />
-        </button>
-      </div>
-    </div>
+  <div className="flex items-center justify-between px-4 py-3 border-t border-[var(--border)]">
+  <p className="text-xs text-[var(--text)] opacity-50">
+    Showing {Math.min((page - 1) * 5 + 1, total)}–{Math.min(page * 5, total)} of {total}
+  </p>
+  <div className="flex gap-2">
+    <button onClick={onPrev} disabled={page === 1}
+      className="px-3 py-1 text-xs rounded-md border border-[var(--border)] disabled:opacity-30 hover:bg-[var(--bg)] transition-colors">
+      Prev
+    </button>
+    <button onClick={onNext} disabled={page === totalPages}
+      className="px-3 py-1 text-xs rounded-md border border-[var(--border)] disabled:opacity-30 hover:bg-[var(--bg)] transition-colors">
+      Next
+    </button>
+  </div>
+</div>
   </div>
 );
 

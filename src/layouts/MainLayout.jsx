@@ -1,10 +1,13 @@
+import { Suspense } from "react";
 import Header from "../components/Layout/Header.jsx";
 import { Outlet } from "react-router-dom";
 const MainLayout = ()=>{
    return (
      <div className="w-full min-h-screen bg-[var(--bg)] text-[var(--text)]">
         <Header/>
-        <Outlet/>
+        <Suspense fallback={null}>
+          <Outlet/>
+        </Suspense>
     </div>
    )
 }

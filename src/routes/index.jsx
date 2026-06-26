@@ -1,22 +1,23 @@
 import { createBrowserRouter } from "react-router-dom";
+import { lazy } from "react";
+
 
 import MainLayout from "../layouts/MainLayout.jsx";
+import AdminLayout from "../layouts/AdminLayout.jsx";  
 
-import Home from "../pages/Home.jsx";
-import Login from "../pages/Login.jsx";
-import Register from "../pages/Register.jsx";
-import ForgotPassword from "../pages/ForgotPassword.jsx";
-import Contact from "../pages/Contact.jsx";
-import About from "../pages/About.jsx";
-import AdminLayout from "../layouts/AdminLayout.jsx";
-import AdminDashboard from "../pages/admin/Dashboard.jsx";
-import CreateCourse from "../pages/admin/CreateCourse.jsx";
-import Profile from "../pages/admin/Profile.jsx";
-import Users from "../pages/admin/Users.jsx";
-import Course from "../pages/admin/Courses.jsx";
-import EditCourse from "../pages/admin/EditCourse.jsx";
-import PageNotFound from "../pages/PageNotFound.jsx";
-
+const Home = lazy(() => import("../pages/Home.jsx"));
+const Login = lazy(() => import("../pages/auth/Login.jsx"));
+const Register = lazy(() => import("../pages/auth/Register.jsx"));
+const ForgotPassword = lazy(() => import("../pages/auth/ForgotPassword.jsx"));
+const Contact = lazy(() => import("../pages/Contact.jsx"));
+const About = lazy(() => import("../pages/About.jsx"));
+const PageNotFound = lazy(() => import("../pages/PageNotFound.jsx"));
+const AdminDashboard = lazy(() => import("../pages/admin/Dashboard.jsx"));
+const Profile = lazy(() => import("../pages/admin/Profile.jsx"));
+const Users = lazy(() => import("../pages/admin/Users.jsx"));
+const Course = lazy(() => import("../pages/admin/Courses.jsx"));
+const Lessons = lazy(()=> import("../pages/admin/Lessons.jsx"));
+const Chat = lazy(()=> import("../pages/admin/Chat.jsx"));
 const router = createBrowserRouter([
   {
     element: <MainLayout />,
@@ -57,9 +58,9 @@ const router = createBrowserRouter([
       { index: true, element: <AdminDashboard /> },
       { path: "users", element: <Users /> },
       { path: "courses", element: <Course /> },
-      { path: "create-course", element: <CreateCourse /> },
-      { path: "edit-course", element: <EditCourse /> },
+      { path: "courses/:id/lessons", element: <Lessons /> },
       { path: "profile", element: <Profile /> },
+      { path: "chat", element: <Chat /> }
     ],
   },
 ]);

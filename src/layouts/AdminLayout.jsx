@@ -1,17 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
-  LayoutDashboard, Users, BookOpen, PlusCircle,
-  UserCircle, LogOut, Menu, X, Bell,
+  LayoutDashboard,
+  Users,
+  BookOpen,
+  UserCircle,
+  LogOut,
+  Menu,
+  X,
+  Bell,
+  MessageSquare,
 } from "lucide-react";
 import ThemeToggle from "../components/UI/ThemeToggle";
 
 const navItems = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
-  { to: "/admin/users", label: "Users", icon: Users },
-  { to: "/admin/courses", label: "Courses", icon: BookOpen },
-  { to: "/admin/create-course", label: "Create Course", icon: PlusCircle },
-  { to: "/admin/profile", label: "Profile", icon: UserCircle },
+  { to: "users", label: "Users", icon: Users },
+  { to: "courses", label: "Courses", icon: BookOpen },
+  { to: "chat", label: "Chat", icon: MessageSquare },
+  { to: "profile", label: "Profile", icon: UserCircle },
 ];
 
 const AdminLayout = () => {
@@ -39,7 +46,6 @@ const AdminLayout = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[var(--bg)] text-[var(--text)]">
-
       {mobileOpen && (
         <div
           className="fixed inset-0 z-20 bg-black/40 md:hidden"
@@ -51,9 +57,10 @@ const AdminLayout = () => {
         className={`
           flex flex-col bg-[var(--card)] border-r border-[var(--border)]
           transition-all duration-300 ease-in-out z-30
-          ${isMobile
-            ? `fixed h-full ${mobileOpen ? "translate-x-0" : "-translate-x-full"} w-[240px]`
-            : `relative ${collapsed ? "w-[60px]" : "w-[240px]"}`
+          ${
+            isMobile
+              ? `fixed h-full ${mobileOpen ? "translate-x-0" : "-translate-x-full"} w-[240px]`
+              : `relative ${collapsed ? "w-[60px]" : "w-[240px]"}`
           }
         `}
       >
@@ -83,9 +90,10 @@ const AdminLayout = () => {
               className={({ isActive }) => `
                 flex items-center gap-3 px-4 py-[9px] text-[13px]
                 border-l-2 transition-all duration-150 overflow-hidden whitespace-nowrap
-                ${isActive
-                  ? "border-cyan-500 text-cyan-500 bg-cyan-500/10"
-                  : "border-transparent text-[var(--text)] opacity-60 hover:opacity-100 hover:bg-[var(--bg)]"
+                ${
+                  isActive
+                    ? "border-cyan-500 text-cyan-500 bg-cyan-500/10"
+                    : "border-transparent text-[var(--text)] opacity-60 hover:opacity-100 hover:bg-[var(--bg)]"
                 }
               `}
             >
@@ -107,9 +115,10 @@ const AdminLayout = () => {
               className={({ isActive }) => `
                 flex items-center gap-3 px-4 py-[9px] text-[13px]
                 border-l-2 transition-all duration-150 overflow-hidden whitespace-nowrap
-                ${isActive
-                  ? "border-cyan-500 text-cyan-500 bg-cyan-500/10"
-                  : "border-transparent text-[var(--text)] opacity-60 hover:opacity-100 hover:bg-[var(--bg)]"
+                ${
+                  isActive
+                    ? "border-cyan-500 text-cyan-500 bg-cyan-500/10"
+                    : "border-transparent text-[var(--text)] opacity-60 hover:opacity-100 hover:bg-[var(--bg)]"
                 }
               `}
             >
@@ -134,7 +143,6 @@ const AdminLayout = () => {
       </aside>
 
       <div className="flex flex-col flex-1 overflow-hidden min-w-0">
-
         <header className="h-[60px] min-h-[60px] bg-[var(--card)] border-b border-[var(--border)] flex items-center px-4 gap-3">
           <button
             onClick={toggleSidebar}
@@ -159,7 +167,9 @@ const AdminLayout = () => {
         </header>
 
         <main className="flex-1 overflow-y-auto p-5">
-          <Outlet />
+          <Suspense fallback={null}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
     </div>
