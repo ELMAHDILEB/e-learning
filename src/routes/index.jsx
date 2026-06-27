@@ -3,12 +3,14 @@ import { lazy } from "react";
 
 
 import MainLayout from "../layouts/MainLayout.jsx";
-import AdminLayout from "../layouts/AdminLayout.jsx";  
+import AdminLayout from "../layouts/AdminLayout.jsx";
+import ProtectedRoute from "../components/Auth/ProtectedRoute.jsx";
 
 const Home = lazy(() => import("../pages/Home.jsx"));
 const Login = lazy(() => import("../pages/auth/Login.jsx"));
 const Register = lazy(() => import("../pages/auth/Register.jsx"));
 const ForgotPassword = lazy(() => import("../pages/auth/ForgotPassword.jsx"));
+const GoogleCallback = lazy(() => import("../pages/auth/GoogleCallback.jsx"));
 const Contact = lazy(() => import("../pages/Contact.jsx"));
 const About = lazy(() => import("../pages/About.jsx"));
 const PageNotFound = lazy(() => import("../pages/PageNotFound.jsx"));
@@ -39,6 +41,10 @@ const router = createBrowserRouter([
         element: <ForgotPassword />,
       },
       {
+        path: "/auth/callback",
+        element: <GoogleCallback />,
+      },
+      {
         path: "/contact",
         element: <Contact />,
       },
@@ -53,7 +59,11 @@ const router = createBrowserRouter([
 
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <ProtectedRoute roles={["admin", "teacher"]}>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <AdminDashboard /> },
       { path: "users", element: <Users /> },

@@ -12,6 +12,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 import ThemeToggle from "../components/UI/ThemeToggle";
+import { useAuth } from "../context/AuthProvider";
 
 const navItems = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -26,6 +27,12 @@ const AdminLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -130,7 +137,7 @@ const AdminLayout = () => {
 
         <div className="p-3 border-t border-[var(--border)]">
           <button
-            onClick={() => navigate("/")}
+            onClick={handleLogout}
             className={`
               flex items-center gap-3 w-full px-3 py-2 rounded-md text-[13px]
               text-red-500 hover:bg-red-500/10 transition-colors overflow-hidden whitespace-nowrap
