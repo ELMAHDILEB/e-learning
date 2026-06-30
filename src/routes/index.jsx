@@ -4,7 +4,12 @@ import { lazy } from "react";
 
 import MainLayout from "../layouts/MainLayout.jsx";
 import AdminLayout from "../layouts/AdminLayout.jsx";
-import ProtectedRoute from "../components/Auth/ProtectedRoute.jsx";
+import StudentLayout from "../layouts/StudentLayout.jsx";
+import CourseLesson from "../components/Student/CourseLesson.jsx";
+import Certificates from "../pages/student/Certificates.jsx";
+
+
+// import ProtectedRoute from "../components/Auth/ProtectedRoute.jsx";
 
 const Home = lazy(() => import("../pages/Home.jsx"));
 const Login = lazy(() => import("../pages/auth/Login.jsx"));
@@ -14,12 +19,25 @@ const GoogleCallback = lazy(() => import("../pages/auth/GoogleCallback.jsx"));
 const Contact = lazy(() => import("../pages/Contact.jsx"));
 const About = lazy(() => import("../pages/About.jsx"));
 const PageNotFound = lazy(() => import("../pages/PageNotFound.jsx"));
+
+/*admin pages*/
 const AdminDashboard = lazy(() => import("../pages/admin/Dashboard.jsx"));
 const Profile = lazy(() => import("../pages/admin/Profile.jsx"));
 const Users = lazy(() => import("../pages/admin/Users.jsx"));
 const Course = lazy(() => import("../pages/admin/Courses.jsx"));
 const Lessons = lazy(()=> import("../pages/admin/Lessons.jsx"));
 const Chat = lazy(()=> import("../pages/admin/Chat.jsx"));
+
+
+
+
+/*student pages*/
+const StudentDashboard = lazy(() => import("../pages/student/StudentDashboard.jsx"));
+const StudentCourses = lazy(()=> import("../pages/student/Courses.jsx"));
+const StudentLessons = lazy(()=> import("../pages/student/Lessons.jsx"));
+const StudentProfile = lazy(()=> import("../pages/student/Profile.jsx"));
+const StudentChat = lazy(()=> import("../pages/student/Chat.jsx")) ;
+
 const router = createBrowserRouter([
   {
     element: <MainLayout />,
@@ -60,9 +78,9 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <ProtectedRoute roles={["admin", "teacher"]}>
+      // <ProtectedRoute roles={["admin", "teacher"]}>
         <AdminLayout />
-      </ProtectedRoute>
+      // </ProtectedRoute>
     ),
     children: [
       { index: true, element: <AdminDashboard /> },
@@ -73,6 +91,27 @@ const router = createBrowserRouter([
       { path: "chat", element: <Chat /> }
     ],
   },
+ {
+  path: "/student",
+  element: (
+    // <ProtectedRoute roles={["student"]}>
+    <StudentLayout />
+    // </ProtectedRoute>
+  ),
+   children: [
+      { index: true, element: <StudentDashboard /> },
+      
+      { path: "courses", element: <StudentCourses /> },
+      
+      { path: "course/:courseId/lesson/:lessonId", element: <CourseLesson /> },
+      
+      { path: "courses/:id/lessons", element: <StudentLessons /> },
+      
+      { path: "certificates", element: <Certificates /> },
+      { path: "profile", element: <StudentProfile /> },
+      { path: "chat", element: <StudentChat /> },
+    ],
+},
 ]);
 
 export default router;
