@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -8,18 +8,25 @@ import {
   LogOut,
   Menu,
   X,
-  Bell,
   MessageSquare,
+  GraduationCap,
+  Shield,
+  Home,
 } from "lucide-react";
 import ThemeToggle from "../components/UI/ThemeToggle";
+import NotificationBell from "../components/UI/NotificationBell";
+import PageTransition from "../components/UI/PageTransition.jsx";
+import PageLoading from "../components/UI/PageLoading.jsx";
 import { useAuth } from "../context/AuthProvider";
 
-const navItems = [
-  { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
-  { to: "users", label: "Users", icon: Users },
-  { to: "courses", label: "Courses", icon: BookOpen },
-  { to: "chat", label: "Chat", icon: MessageSquare },
-  { to: "profile", label: "Profile", icon: UserCircle },
+const allNavItems = [
+  { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true, roles: ["admin", "teacher"] },
+  { to: "users", label: "Users", icon: Users, roles: ["admin"] },
+  { to: "permissions", label: "Permissions", icon: Shield, roles: ["admin"] },
+  { to: "courses", label: "Courses", icon: BookOpen, roles: ["admin", "teacher"] },
+  { to: "students", label: "Students", icon: GraduationCap, roles: ["teacher"] },
+  { to: "chat", label: "Chat", icon: MessageSquare, roles: ["admin", "teacher"] },
+  { to: "profile", label: "Profile", icon: UserCircle, roles: ["admin", "teacher"] },
 ];
 
 const AdminLayout = () => {
@@ -27,11 +34,20 @@ const AdminLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+
+  const role = user?.role?.name;
+  const navItems = allNavItems.filter((item) => item.roles.includes(role));
+  const mainItems = navItems.filter((item) => item.to !== "profile");
+  const accountItems = navItems.filter((item) => item.to === "profile");
+
+  const initials = user?.name
+    ? user.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()
+    : "AD";
 
   const handleLogout = async () => {
     await logout();
-    navigate("/login");
+    navigate("/");
   };
 
   useEffect(() => {
@@ -77,7 +93,7 @@ const AdminLayout = () => {
           </div>
           {(!collapsed || isMobile) && (
             <span className="text-[15px] font-medium whitespace-nowrap">
-              <span className="text-cyan-500">E</span>-Learning
+              <span className="text-cyan-500">Uni</span>Learn
             </span>
           )}
         </div>
@@ -88,7 +104,7 @@ const AdminLayout = () => {
               Main
             </p>
           )}
-          {navItems.slice(0, 4).map(({ to, label, icon: Icon, end }) => (
+          {mainItems.map(({ to, label, icon: Icon, end }) => (
             <NavLink
               key={to}
               to={to}
@@ -114,7 +130,7 @@ const AdminLayout = () => {
               Account
             </p>
           )}
-          {navItems.slice(4).map(({ to, label, icon: Icon }) => (
+          {accountItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
@@ -159,23 +175,28 @@ const AdminLayout = () => {
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
 
-          <span className="flex-1 text-[15px] font-medium">Admin Panel</span>
+          <span className="flex-1 text-[15px] font-medium">{role === "teacher" ? "Teacher Portal" : "Administration Portal"}</span>
 
           <div className="flex items-center gap-2">
-            <button className="relative p-1.5 rounded-md text-[var(--text)] opacity-60 hover:opacity-100 hover:bg-[var(--bg)] transition-all">
-              <Bell size={20} />
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500 border-2 border-[var(--card)]" />
+            <button onClick={() => navigate("/")} title="Home"
+              className="p-1.5 rounded-md opacity-60 hover:opacity-100 hover:bg-[var(--bg)] transition-all">
+              <Home size={18} />
             </button>
+            <button onClick={handleLogout} title="Logout"
+              className="p-1.5 rounded-md opacity-60 hover:opacity-100 hover:bg-[var(--bg)] hover:text-red-500 transition-all">
+              <LogOut size={18} />
+            </button>
+            <NotificationBell />
             <ThemeToggle />
             <div className="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-white text-xs font-medium cursor-pointer">
-              AD
+              {initials}
             </div>
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-5">
-          <Suspense fallback={null}>
-            <Outlet />
+        <main className="portal-main flex-1 overflow-y-auto p-5">
+          <Suspense fallback={<PageLoading />}>
+            <PageTransition />
           </Suspense>
         </main>
       </div>

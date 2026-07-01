@@ -1,4 +1,4 @@
-const UserForm = ({ form, onChange }) => (
+const UserForm = ({ form, onChange, showPassword = false }) => (
   <div className="flex flex-col gap-3">
     {[
       ["Name", "name", "text", "Ahmed Benali"],
@@ -15,6 +15,18 @@ const UserForm = ({ form, onChange }) => (
         />
       </div>
     ))}
+    {showPassword && (
+      <div>
+        <label className="block text-xs text-[var(--text)] opacity-50 mb-1">Password</label>
+        <input
+          type="password"
+          placeholder="Min. 8 characters"
+          value={form.password || ""}
+          onChange={(e) => onChange("password", e.target.value)}
+          className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] outline-none focus:border-cyan-500 transition-colors"
+        />
+      </div>
+    )}
     <div className="grid grid-cols-2 gap-3">
       <div>
         <label className="block text-xs text-[var(--text)] opacity-50 mb-1">Role</label>
@@ -23,8 +35,8 @@ const UserForm = ({ form, onChange }) => (
           onChange={(e) => onChange("role", e.target.value)}
           className="w-full px-3 py-2 text-sm rounded-lg bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] outline-none focus:border-cyan-500 transition-colors cursor-pointer"
         >
-          <option>Admin</option>
-          <option>Instructor</option>
+          <option>Administrator</option>
+          <option>Teacher</option>
           <option>Student</option>
         </select>
       </div>

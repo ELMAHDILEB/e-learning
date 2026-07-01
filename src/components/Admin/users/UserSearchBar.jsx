@@ -19,8 +19,8 @@ const UserSearchBar = ({ search, onSearch, roleFilter, onRoleChange }) => {
         className="px-3 py-2 text-sm rounded-lg bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] outline-none focus:border-cyan-500 transition-colors cursor-pointer"
       >
         <option value="All">All Roles</option>
-        <option value="Admin">Admin</option>
-        <option value="Instructor">Instructor</option>
+        <option value="Administrator">Administrator</option>
+        <option value="Teacher">Teacher</option>
         <option value="Student">Student</option>
       </select>
     </div>

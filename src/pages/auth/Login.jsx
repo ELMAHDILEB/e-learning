@@ -13,7 +13,7 @@ export default function Login() {
 
   return (
     <AuthForm
-      title="Sign in to your account"
+      title="Sign in to UniLearn"
       buttonText="Sign in"
       onSubmit={handleSubmit}
       loading={loading}

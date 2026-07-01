@@ -54,6 +54,7 @@ export const getStoredToken = (): string | null =>
 export const getDashboardPath = (user: User | null): string => {
   const role = user?.role?.name;
   if (role === "admin" || role === "teacher") return "/admin";
+  if (role === "student") return "/student";
   return "/";
 };
 

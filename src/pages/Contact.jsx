@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { sendContact } from "../services/contact";
 
 const contactInfo = [
   {
@@ -36,15 +37,26 @@ const Contact = () => {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setForm({ name: "", email: "", subject: "", message: "" });
+    setSubmitting(true);
+    setError("");
+    try {
+      await sendContact(form);
+      setSubmitted(true);
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch {
+      setError("Failed to send message. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -91,6 +103,10 @@ const Contact = () => {
             <p className="text-sm opacity-70 mb-6">
               Fill out the form below and our team will get back to you within 24 hours.
             </p>
+
+            {error && (
+              <div className="mb-6 p-4 rounded-lg bg-red-500/10 text-red-500 text-sm">{error}</div>
+            )}
 
             {submitted && (
               <div className="mb-6 flex items-center gap-2 p-4 rounded-lg bg-cyan-500/10 text-cyan-500 text-sm">
@@ -148,11 +164,9 @@ const Contact = () => {
                   className="w-full rounded-md px-3 py-2.5 bg-[var(--bg)] text-[var(--text)] border border-[var(--border)] focus:outline-none focus:border-cyan-500 transition-colors resize-none"
                 />
               </div>
-              <button
-                type="submit"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-cyan-500 text-white font-medium hover:bg-cyan-600 transition-colors"
-              >
-                Send Message
+              <button type="submit" disabled={submitting}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-cyan-500 text-white font-medium hover:bg-cyan-600 transition-colors disabled:opacity-50">
+                {submitting ? "Sending..." : "Send Message"}
                 <Send size={18} />
               </button>
             </form>

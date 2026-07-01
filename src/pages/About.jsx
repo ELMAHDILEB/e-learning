@@ -10,6 +10,8 @@ import {
   GraduationCap,
   ArrowRight,
 } from "lucide-react";
+import AnimatedSection from "../components/UI/AnimatedSection.jsx";
+import Stagger from "../components/UI/Stagger.jsx";
 
 const values = [
   {
@@ -50,7 +52,7 @@ const About = () => {
       <section className="relative overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 py-20 md:py-24 relative">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl animate-fade-up motion-reduce:animate-none">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 text-cyan-500 text-sm font-medium mb-6">
               <GraduationCap size={16} />
               About Our Platform
@@ -71,8 +73,8 @@ const About = () => {
 
       {/* Mission & Vision */}
       <section className="max-w-7xl mx-auto px-4 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="p-8 rounded-xl bg-[var(--card)] border border-[var(--border)]">
+        <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-8" step={90}>
+          <div className="ui-card p-8 rounded-xl bg-[var(--card)] border border-[var(--border)]">
             <div className="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-5">
               <Target className="text-cyan-500" size={24} />
             </div>
@@ -84,7 +86,7 @@ const About = () => {
               accessible to every student.
             </p>
           </div>
-          <div className="p-8 rounded-xl bg-[var(--card)] border border-[var(--border)]">
+          <div className="ui-card p-8 rounded-xl bg-[var(--card)] border border-[var(--border)]">
             <div className="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-5">
               <Eye className="text-cyan-500" size={24} />
             </div>
@@ -95,11 +97,11 @@ const About = () => {
               innovative teaching tools that prepare learners for the future.
             </p>
           </div>
-        </div>
+        </Stagger>
       </section>
 
       {/* Who we serve */}
-      <section className="bg-[var(--card)] border-y border-[var(--border)]">
+      <AnimatedSection as="section" className="bg-[var(--card)] border-y border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-4 py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -132,7 +134,7 @@ const About = () => {
             </ul>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Values */}
       <section className="max-w-7xl mx-auto px-4 py-20">
@@ -142,11 +144,11 @@ const About = () => {
             The principles that guide everything we build for academic learning.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" step={70}>
           {values.map(({ icon: Icon, title, description }) => (
             <div
               key={title}
-              className="p-6 rounded-xl bg-[var(--card)] border border-[var(--border)] text-center"
+              className="ui-card p-6 rounded-xl bg-[var(--card)] border border-[var(--border)] text-center"
             >
               <div className="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mx-auto mb-4">
                 <Icon className="text-cyan-500" size={22} />
@@ -155,7 +157,7 @@ const About = () => {
               <p className="text-sm opacity-70">{description}</p>
             </div>
           ))}
-        </div>
+        </Stagger>
       </section>
 
       {/* CTA */}
@@ -168,14 +170,14 @@ const About = () => {
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-cyan-500 text-white font-medium hover:bg-cyan-600 transition-colors"
+              className="ui-btn inline-flex items-center gap-2 px-6 py-3 rounded-md bg-cyan-500 text-white font-medium hover:bg-cyan-600"
             >
               Contact Us
               <ArrowRight size={18} />
             </Link>
             <Link
               to="/register"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-md border border-[var(--border)] font-medium hover:border-cyan-500 hover:text-cyan-500 transition-colors"
+              className="ui-btn inline-flex items-center gap-2 px-6 py-3 rounded-md border border-[var(--border)] font-medium hover:border-cyan-500 hover:text-cyan-500"
             >
               Join the Platform
             </Link>

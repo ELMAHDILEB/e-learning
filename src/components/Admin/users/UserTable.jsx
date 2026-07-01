@@ -2,6 +2,8 @@ import { Mail, Pencil, Trash2 } from "lucide-react";
 
 const roleBadge = {
   Admin: "bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400",
+  Teacher: "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-400",
+  Administrator: "bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400",
   Instructor: "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-400",
   Student: "bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400",
 };
@@ -11,7 +13,7 @@ const statusBadge = {
   Inactive: "bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400",
 };
 
-const UserTable = ({ users, total, page, totalPages, onEdit, onDelete, onNext, onPrev }) => (
+const UserTable = ({ users, total, page, perPage = 5, totalPages, onEdit, onDelete, onNext, onPrev, loading }) => (
   <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl overflow-hidden">
     <div className="overflow-x-auto w-full">
       <table className="min-w-[650px] w-full text-sm">
@@ -87,7 +89,10 @@ const UserTable = ({ users, total, page, totalPages, onEdit, onDelete, onNext, o
     {/* Pagination */}
   <div className="flex items-center justify-between px-4 py-3 border-t border-[var(--border)]">
   <p className="text-xs text-[var(--text)] opacity-50">
-    Showing {Math.min((page - 1) * 5 + 1, total)}–{Math.min(page * 5, total)} of {total}
+    {total === 0
+      ? "No users"
+      : `Showing ${(page - 1) * perPage + 1}–${Math.min(page * perPage, total)} of ${total}`}
+    {loading && " · Updating..."}
   </p>
   <div className="flex gap-2">
     <button onClick={onPrev} disabled={page === 1}

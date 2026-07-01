@@ -65,6 +65,13 @@ export default function useAuthForm(mode) {
 
         loginSuccess(response.token, response.user);
         navigate(getDashboardPath(response.user));
+        return;
+      }
+
+      if (mode === "forgotPassword") {
+        const { forgotPassword } = await import("../services/contact");
+        const { data: response } = await forgotPassword(data.email);
+        setErrors({ general: response.message });
       }
     } catch (error) {
       setErrors(parseApiErrors(error));

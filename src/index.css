@@ -22,12 +22,6 @@
   }
 }
 
-@media (min-width: 768px) {
-  .navLinks {
-    clip-path: none !important;
-  }
-}
-
 .toggle {
   @apply text-[1em] overflow-hidden transition-all duration-[1000ms] ease-in-out max-h-0;
   clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
@@ -60,9 +54,91 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 html,
 body,
 #root {
   min-height: 100%;
   font-family: "Inter", sans-serif;
+}
+
+@layer components {
+  .ui-btn {
+    @apply transition-all duration-200 ease-smooth motion-safe:active:scale-[0.98];
+  }
+
+  .ui-card {
+    @apply transition-[border-color,box-shadow,transform] duration-300 ease-smooth;
+  }
+
+  .portal-main:not(.study-zone) .ui-card {
+    @apply motion-safe:hover:-translate-y-px motion-safe:hover:shadow-sm;
+  }
+
+  .marketing-main .ui-card {
+    @apply motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-md motion-safe:hover:border-cyan-500/30;
+  }
+
+  .nav-link-animated {
+    @apply relative transition-colors duration-200;
+  }
+
+  .nav-link-animated::after {
+    content: "";
+    @apply absolute -bottom-1 left-0 h-px w-0 bg-cyan-500 transition-all duration-300 ease-smooth;
+  }
+
+  .nav-link-animated:hover::after,
+  .nav-link-animated.active::after {
+    @apply w-full;
+  }
+
+  .study-zone .ui-card,
+  .study-zone .animate-float-gentle {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .study-zone * {
+    scroll-behavior: auto;
+  }
+
+  .auth-panel {
+    @apply animate-fade-up motion-reduce:animate-none bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 md:p-8 shadow-sm;
+  }
+
+  .progress-bar-fill {
+    @apply transition-[width] duration-700 ease-smooth;
+  }
+}
+
+@layer utilities {
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
 }

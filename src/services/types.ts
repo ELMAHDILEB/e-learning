@@ -12,6 +12,9 @@ export interface User {
   role_id?: number;
   google_id?: string | null;
   avatar?: string | null;
+  phone?: string | null;
+  bio?: string | null;
+  location?: string | null;
   role?: Role;
   email_verified_at?: string | null;
   created_at?: string;

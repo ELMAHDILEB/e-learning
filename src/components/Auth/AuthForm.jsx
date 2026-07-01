@@ -1,7 +1,7 @@
 const AuthForm = ({ title, children, buttonText, onSubmit, footer, loading, googleButton }) => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--bg)] text-[var(--text)] px-4 py-8">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md auth-panel">
         <h2 className="text-center text-2xl font-bold mb-6">{title}</h2>
 
         {googleButton && (
@@ -16,7 +16,7 @@ const AuthForm = ({ title, children, buttonText, onSubmit, footer, loading, goog
               <div className="w-full border-t border-[var(--border)]" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-[var(--bg)] px-2 opacity-60">or</span>
+              <span className="bg-[var(--card)] px-2 opacity-60">or</span>
             </div>
           </div>
         )}
@@ -27,7 +27,7 @@ const AuthForm = ({ title, children, buttonText, onSubmit, footer, loading, goog
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[var(--primary)] text-white py-2 rounded-md hover:opacity-90 transition disabled:opacity-60"
+            className="ui-btn w-full bg-[var(--primary)] text-white py-2 rounded-md hover:opacity-90 disabled:opacity-60"
           >
             {loading ? "Please wait..." : buttonText}
           </button>

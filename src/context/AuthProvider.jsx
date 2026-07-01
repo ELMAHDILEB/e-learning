@@ -1,19 +1,18 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect } from "react";
 import {
   clearSession,
   getMe,
   getStoredToken,
-  getStoredUser,
   logout as logoutApi,
   saveSession,
 } from "../services/auth";
+import { disconnectEcho, initEcho } from "../lib/echo";
+import { useAuthStore } from "../store/authStore";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(getStoredUser);
-  const [token, setToken] = useState(getStoredToken);
-  const [loading, setLoading] = useState(!!getStoredToken());
+  const { user, token, loading, setSession, clearSession: clearStore, setLoading } = useAuthStore();
 
   useEffect(() => {
     const init = async () => {
@@ -25,24 +24,25 @@ export const AuthProvider = ({ children }) => {
 
       try {
         const { data } = await getMe();
-        setUser(data);
         saveSession(storedToken, data);
+        setSession(storedToken, data);
+        initEcho(storedToken, data.id);
       } catch {
         clearSession();
-        setUser(null);
-        setToken(null);
+        disconnectEcho();
+        clearStore();
       } finally {
         setLoading(false);
       }
     };
 
     init();
-  }, []);
+  }, [setSession, clearStore, setLoading]);
 
   const loginSuccess = (authToken, authUser) => {
     saveSession(authToken, authUser);
-    setToken(authToken);
-    setUser(authUser);
+    setSession(authToken, authUser);
+    initEcho(authToken, authUser.id);
   };
 
   const logout = async () => {
@@ -51,9 +51,9 @@ export const AuthProvider = ({ children }) => {
     } catch {
       // ignore network errors on logout
     } finally {
+      disconnectEcho();
       clearSession();
-      setToken(null);
-      setUser(null);
+      clearStore();
     }
   };
 
@@ -71,3 +71,5 @@ export const useAuth = () => {
   }
   return context;
 };
+
+export { useAuthStore };

@@ -10,7 +10,7 @@ const iconColors = {
 const StatsCards = ({ stats }) => (
   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
     {stats.map(({ label, value, trend, up, icon: Icon, color }) => (
-      <div key={label} className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 flex flex-col gap-3">
+      <div key={label} className="ui-card bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${iconColors[color]}`}>
             <Icon size={18} />
